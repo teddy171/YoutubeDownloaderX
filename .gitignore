@@ -1,0 +1,4 @@
+.DS_store
+*.sqlite3
+__pycache__/
+ytdx_env/
