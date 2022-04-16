@@ -3,5 +3,5 @@ from .models import Task
 class TaskForm(forms.ModelForm): 
     class Meta:
         model = Task
-        fields = ['content']
-        labels = {'content': ''}
+        fields = ['content', 'email']
+        labels = {'content': '', 'email':''}

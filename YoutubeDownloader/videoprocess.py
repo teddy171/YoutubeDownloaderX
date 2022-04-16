@@ -5,19 +5,20 @@ import os
 import json
 
 from .autoMail import send_email
-def send_video(filename):
+def send_video(filename, email):
     with open(filename,'rb') as f:
         content = f.read()
     proress = str(int.from_bytes(content, byteorder='big', signed=False))
     while True:
         try:
-            send_email(filename, proress, "teddy171@qq.com")
+            send_email(filename.split('/')[-1], proress, email)
         except:
             pass
         else:
+            print("Already send the mail.")
             os.remove(filename)
-def download_video(content):
-    ydl_opts = {"writeinfojson": True}
+def download_video(content, location, email):
+    ydl_opts = {"writeinfojson": True, "outtmpl":f"data/{location}/%(title)s.%(ext)s"}
     while True:
         try:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -26,7 +27,7 @@ def download_video(content):
             pass
         else:
             break
-    files = os.listdir(".")
+    files = os.listdir(f"data/{location}/")
     info_files = []
     video_names = []
     for file in files:
@@ -34,7 +35,7 @@ def download_video(content):
         if(element[-1] == 'json' and element[-2] == "info"):
             info_files.append(file)
     for info_file in info_files:
-        with open(info_file) as f:
+        with open(f"data/{location}/{info_file}") as f:
             info = json.load(f)
             video_name = info["_filename"]
             video_names.append(video_name)
@@ -42,7 +43,6 @@ def download_video(content):
                 n = 0
                 file_names = []
                 while True:
-                    print("reading into the memory")
                     block = video.read(1048576)
                     if not block:
                         break
@@ -50,11 +50,10 @@ def download_video(content):
                         f.write(block)
                         file_names.append(f"{video_name}.{n}")
                     n+=1
-                    print(len(file_names))
-                    with futures.ProcessPoolExecutor() as executor:
-                        res = executor.map(send_video, file_names)
+                with futures.ProcessPoolExecutor() as executor:
+                    res = executor.map(send_video, file_names, email)
             os.remove(video_name)
-        os.remove(info_file)    
+        os.remove(f"data/{location}/{info_file}")    
 
     return video_names
 

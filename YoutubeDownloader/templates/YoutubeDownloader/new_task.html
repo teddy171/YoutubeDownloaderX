@@ -1,10 +1,11 @@
 {% extends "YoutubeDownloader/base.html" %}
 
 {% block content %}
-    <p>Start a new task:</p>
+    <p>Start a new task:(the next form is the email which the video send)</p>
     <form action="{% url 'YoutubeDownloader:new_task' %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
         <button name="submit">Add task</button>
     </form>
+    
 {% endblock content %}

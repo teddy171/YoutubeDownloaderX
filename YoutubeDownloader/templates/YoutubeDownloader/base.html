@@ -2,7 +2,13 @@
     <a href="{% url 'YoutubeDownloader:index' %}">YoutubeDownloaderX</a> - 
     <a href="{% url 'YoutubeDownloader:task' %}">task</a> - 
     <a href="{% url 'YoutubeDownloader:new_task' %}">new_task</a> - 
-    <a href="{% url 'YoutubeDownloader:download_task' %}">downlaod_task</a>
+    <a href="{% url 'YoutubeDownloader:download_task' %}">download_task</a> - 
+    {% if user.is_authenticated %}
+        Hello, {{ user.username }}.
+        <a href="{% url 'users:logout' %}">Log out</a>
+    {% else %}
+        <a href="{% url 'users:login' %}">Log in</a>
+    {% endif %}
 </p>
 
 {% block content %}{% endblock content %}
