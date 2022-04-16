@@ -26,6 +26,7 @@ def download_video(content, location, email):
         except:
             pass
         else:
+            print("Already download video.")
             break
     files = os.listdir(f"data/{location}/")
     info_files = []

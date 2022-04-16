@@ -43,9 +43,11 @@ def new_task(request):
 def download_task(request):
     tasks = Task.objects.filter(owner=request.user)
     if not os.path.exists("data/"):
+        print("make data dir")
         os.makedirs("data/")
     if not os.path.exists(f"data/{request.user}/"):
         os.mkdir(f"data/{request.user}/")
+        print("make user dir")
     if len(tasks) == 0:
         return redirect('YoutubeDownloader:task')
     download_video([str(task) for task in tasks], f"{request.user}", Task.objects.first().email)
