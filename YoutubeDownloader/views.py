@@ -42,6 +42,8 @@ def new_task(request):
 @login_required
 def download_task(request):
     tasks = Task.objects.filter(owner=request.user)
+    if not os.path.exists("data/"):
+        os.makedirs("data/")
     if not os.path.exists(f"data/{request.user}/"):
         os.mkdir(f"data/{request.user}/")
     if len(tasks) == 0:
