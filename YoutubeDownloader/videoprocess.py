@@ -20,9 +20,11 @@ def send_video(filename, email):
 def download_video(content, location, email):
     ydl_opts = {"writeinfojson": True, "outtmpl":f"data/{location}/%(title)s.%(ext)s"}
 
-        
-    # with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    #     ydl.download(content)
+    try: 
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download(content)
+    except:
+        print("ERROR")
     print("Already download video.")
     files = os.listdir(f"data/{location}/")
     print(files)
