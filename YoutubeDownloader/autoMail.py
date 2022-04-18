@@ -8,9 +8,9 @@ def send_email(subject, content, receiver):
 
     mail_host="smtp.office365.com"  #set server
 
-    mail_user="teddy171_QQH@outlook.com"    #user name
+    mail_user="************"    #user name
 
-    mail_pass="Wenqi2020@qqh"   #password
+    mail_pass="***********"   #password
 
     message = MIMEText(content, 'plain', 'utf-8')
 

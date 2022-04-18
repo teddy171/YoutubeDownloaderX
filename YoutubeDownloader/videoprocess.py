@@ -18,7 +18,7 @@ def send_video(filename, email):
             print("Already send the mail.")
             os.remove(filename)
 def download_video(content, location, email):
-    ydl_opts = {"writeinfojson": True, "outtmpl":f"data/{location}/%(title)s.%(ext)s"}
+    ydl_opts = {"writeinfojson": True, "outtmpl":f"data/{location}/%(title)s.%(ext)s", "hls_use_mpegts":True}
     while True:
         try: 
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
